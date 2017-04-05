@@ -9,17 +9,27 @@ html,body{margin: 0;padding: 0}
 #head-wrap,#foot-wrap,#main-wrap{width: 100%;height: auto;}
 #head-wrap{background: #666;position: fixed;}
 #foot-wrap{background: #333;}
-#main-wrap{background: #ccc;padding-top: 60px}
+#main-wrap{padding-top: 60px}
 
 #head-container,#foot-container,#main-container{width: 1200px;margin: 0 auto;}
 #head-container{height: 60px;}
 #foot-container{height: 100px;}
-#main-container{height: 2000px;padding: 10px 0;background: #fff;}
+#main-container{height: auto;padding: 10px 0;}
 
 /*head*/
 #head-container a.logo{width: auto;height: auto;display: block;float: left;}
 #head-container a.logo img{width: 100px;height: 60px;}
 #head-container .userinfo{width: auto;height: 30px;float: right;margin: 15px 0;line-height: 30px;text-align: right;}
+
+/*main*/
+#main-container .item{width: auto;height: auto;padding: 0 10px;margin: 10px 0;background: #eee;border-radius: 4px}
+#main-container .word{width: auto;height: auto;padding: 20px 0;line-height: 30px;}
+#main-container .info{width: auto;height: auto;padding: 10px 0;line-height: 30px;
+    border-top: dashed 1px #ccc;}
+
+.item .avatar{width: 30px;height: 30px;border-radius: 50%;}
+.item .option{width: auto;height: auto;float: right;}
+.item .option span{width: auto;height: 24px;background: #ccc;color: #fff;display: inline-block;line-height: 24px;padding: 0 10px;border-radius: 12px;font-size: 12px;}
 
 /*layui*/
 .layui-nav{float: left;background: none}
@@ -42,16 +52,39 @@ html,body{margin: 0;padding: 0}
     </div>
 </div>
 <div id="main-wrap">
-    <div id="main-container">111</div>
+    <div id="main-container">
+        <div class="item" v-for="n in 10">
+            <div class="word">{{n}}</div>
+            <div class="info">
+                <img class="avatar" src="static/images/100.gif">
+                <span>Hello&nbsp;在&nbsp;<i>2017/01/01 12:30</i>&nbsp;发起了新开篇&nbsp;<i>第一篇</i></span>
+                <div class="option">
+                    <span>续创99次</span>
+                    <span>点赞99次</span>
+                    <span>阅读99次</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div id="foot-wrap">
     <div id="foot-container"></div>
 </div>
 </body>
 <script type="text/javascript" src="static/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="static/js/vue.js"></script>
 <script type="text/javascript">
+/*layui*/
 layui.use('element', function(){
     var element = layui.element();
 });
+
+/*vuejs*/
+var maindata = new Vue({
+    el: '#main-container',
+    data: {
+        // message: 'Hello Vue!'
+    }
+})
 </script>
 </html>
