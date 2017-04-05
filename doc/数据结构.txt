@@ -1,0 +1,12 @@
+user用户表
+--------------------------
+id
+username
+password
+
+
+word文章表
+--------------------------
+id
+top_id
+content
