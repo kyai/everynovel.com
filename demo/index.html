@@ -8,23 +8,35 @@
 html,body{margin: 0;padding: 0}
 #head-wrap,#foot-wrap,#main-wrap{width: 100%;height: auto;}
 #head-wrap{background: #666;position: fixed;}
-#foot-wrap{background: #333;}
+#foot-wrap{background: #666;}
 #main-wrap{padding-top: 60px}
 
 #head-container,#foot-container,#main-container{width: 1200px;margin: 0 auto;}
 #head-container{height: 60px;}
-#foot-container{height: 100px;}
+#foot-container{height: 60px;}
 #main-container{height: auto;padding: 10px 0;}
 
 /*head*/
 #head-container a.logo{width: auto;height: auto;display: block;float: left;}
 #head-container a.logo img{width: auto;height: 60px;}
-#head-container .userinfo{width: auto;height: 30px;float: right;margin: 15px 0;line-height: 30px;text-align: right;}
+#head-container .userinfo{width: auto;height: 30px;float: right;margin: 15px 0;line-height: 30px;text-align: right;color: #ccc;}
+#head-container .userinfo .al{}
+#head-container .userinfo .bl{}
+
+#head-container .userinfo .bl span{cursor: pointer;}
+#head-container .userinfo .bl span:hover{color: #fff}
+
+/*foot*/
+#foot-container .copyright{line-height: 60px;color: #ccc}
 
 /*main*/
 #main-container .item{width: auto;height: auto;padding: 0 10px;margin: 10px 0;background: #eee;border-radius: 4px}
-#main-container .word{width: auto;height: auto;padding: 20px 0;line-height: 30px;}
-#main-container .info{width: auto;height: auto;padding: 10px 0;line-height: 30px;
+#main-container .item:hover{background: #ddd;
+    transition: background .3s;-moz-transition: background .3s;-webkit-transition: background .3s;-o-transition: background .3s;
+}
+
+.item .word{width: auto;height: auto;padding: 20px 0;line-height: 30px;}
+.item .info{width: auto;height: auto;padding: 10px 0;line-height: 30px;
     border-top: dashed 1px #ccc;}
 
 .item .avatar{width: 30px;height: 30px;border-radius: 50%;}
@@ -42,19 +54,25 @@ html,body{margin: 0;padding: 0}
             <img src="static/images/logo.fw.png">
         </a>
         <ul class="layui-nav" lay-filter="">
-            <li class="layui-nav-item layui-this"><a href="javascript:;">导航菜单</a></li>
-            <li class="layui-nav-item"><a href="javascript:;">导航菜单</a></li>
-            <li class="layui-nav-item"><a href="javascript:;">导航菜单</a></li>
+            <li class="layui-nav-item layui-this"><a href="javascript:;">首页</a></li>
             <li class="layui-nav-item"><a href="javascript:;">导航菜单</a></li>
             <li class="layui-nav-item"><a href="javascript:;">导航菜单</a></li>
         </ul>
-        <div class="userinfo">username</div>
+        <div class="userinfo">
+            <div class="al" v-if="isLogin">
+                <span>username</span>
+            </div>
+            <div class="bl" v-else>
+                <span @click="show_reg()">注册</span>
+                <span @click="show_log()">登陆</span>
+            </div>
+        </div>
     </div>
 </div>
 <div id="main-wrap">
     <div id="main-container">
-        <div class="item" v-for="n in 10">
-            <div class="word">{{n}}</div>
+        <div class="item" v-for="item in list">
+            <div class="word">{{item.Content}}</div>
             <div class="info">
                 <img class="avatar" src="static/images/100.gif">
                 <span>Hello&nbsp;在&nbsp;<i>2017/01/01 12:30</i>&nbsp;发起了新开篇&nbsp;<i>第一篇</i></span>
@@ -68,9 +86,12 @@ html,body{margin: 0;padding: 0}
     </div>
 </div>
 <div id="foot-wrap">
-    <div id="foot-container"></div>
+    <div id="foot-container">
+        <div class="copyright">&copy;&nbsp;Copyright&nbsp;-&nbsp;www.everynovel.com</div>
+    </div>
 </div>
 </body>
+<script type="text/javascript" src="static/js/jquery.min.js"></script>
 <script type="text/javascript" src="static/plugins/layui/layui.js"></script>
 <script type="text/javascript" src="static/js/vue.js"></script>
 <script type="text/javascript">
@@ -80,11 +101,65 @@ layui.use('element', function(){
 });
 
 /*vuejs*/
+var headdata = new Vue({
+    el: '#head-container',
+    data: {
+        isLogin : 0
+    },
+    methods: {
+        show_log : function(){
+            headdata.isLogin = 1;
+        },
+        show_reg : function(){}
+    }
+})
+
 var maindata = new Vue({
     el: '#main-container',
     data: {
-        // message: 'Hello Vue!'
+        list : ''
     }
 })
+
+$(document).ready(function(){
+    init_layout();
+    data(0);
+});
+
+function init_layout(){
+    var w = $(window).width();
+    var h = $(window).height();
+
+    var h_h = $('#head-container').height();
+    var h_f = $('#foot-container').height();
+
+    $('#main-container').css('min-height',h-h_h-h_f-20);
+}
+
+function data(id){
+    $.ajax({
+        type: "GET",
+        url: "api.php",
+        data: {id:id},
+        timeout : 6000,
+        dataType: "json",
+        // global: false,
+        // cache: false,
+        // async: true,
+        beforeSend: function(xhr){
+            // do something
+        },
+        success: function (data) {
+            console.log(data);
+            maindata.list = data.Data;
+        },
+        error: function(xhr,msg){
+            alert('ERROR : '+msg);
+        },
+        complete: function(){
+            // do something
+        }
+    });
+}
 </script>
 </html>

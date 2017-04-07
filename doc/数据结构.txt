@@ -1,13 +1,14 @@
-user用户表
+en_user用户表
 --------------------------
 id
 username
 password
 
 
-word文章表
+en_word文章表
 --------------------------
 id
 top_id
+title
 content
 date
