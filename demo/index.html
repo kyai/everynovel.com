@@ -91,6 +91,7 @@ html,body{margin: 0;padding: 0}
     </div>
 </div>
 </body>
+<script type="text/javascript" src="static/js/config.js"></script>
 <script type="text/javascript" src="static/js/jquery.min.js"></script>
 <script type="text/javascript" src="static/plugins/layui/layui.js"></script>
 <script type="text/javascript" src="static/js/vue.js"></script>
@@ -139,13 +140,12 @@ function init_layout(){
 function data(id){
     $.ajax({
         type: "GET",
-        url: "api.php",
+        url: EN.config.API_URL+"/GetWord",
         data: {id:id},
         timeout : 6000,
-        dataType: "json",
-        // global: false,
-        // cache: false,
-        // async: true,
+        dataType: "jsonp",
+        jsonp: "callbackparam",
+        jsonpCallback:"jsonpCallback",
         beforeSend: function(xhr){
             // do something
         },

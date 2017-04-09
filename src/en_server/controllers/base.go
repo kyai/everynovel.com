@@ -57,6 +57,16 @@ func (c *BaseController) EchoJSON(code, msg string, data interface{}) {
 	return
 }
 
+func (c *BaseController) EchoJSONP(code, msg string, data interface{}) {
+	var jdata = make(map[string]interface{})
+	jdata["Code"] = code
+	jdata["Msg"] = msg
+	jdata["Data"] = data
+	adata_json, _ := json.Marshal(jdata)
+	c.Ctx.WriteString("jsonpCallback("+string(adata_json)+")")
+	return
+}
+
 func init() {
 
 }

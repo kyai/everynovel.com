@@ -32,5 +32,5 @@ func (c *WordController) GetWord() {
     infs := []Word{}
     err = collection.Find(&bson.M{}).All(&infs)
 
-    c.EchoJSON("111", "aaa", infs)
+    c.EchoJSONP("111", "aaa", infs)
 }
