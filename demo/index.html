@@ -11,6 +11,8 @@ html,body{margin: 0;padding: 0}
 #foot-wrap{background: #666;}
 #main-wrap{padding-top: 60px}
 
+#head-wrap.scroll{border-bottom: 1px solid #ebebeb;box-shadow: 0 0 5px #888;}
+
 #head-container,#foot-container,#main-container{width: 1200px;margin: 0 auto;}
 #head-container{height: 60px;}
 #foot-container{height: 60px;}
@@ -38,6 +40,8 @@ html,body{margin: 0;padding: 0}
 .item .word{width: auto;height: auto;padding: 20px 0;line-height: 30px;}
 .item .info{width: auto;height: auto;padding: 10px 0;line-height: 30px;
     border-top: dashed 1px #ccc;}
+
+.item .word:hover{cursor: pointer;color: #666}
 
 .item .avatar{width: 30px;height: 30px;border-radius: 50%;}
 .item .option{width: auto;height: auto;float: right;}
@@ -72,7 +76,7 @@ html,body{margin: 0;padding: 0}
 <div id="main-wrap">
     <div id="main-container">
         <div class="item" v-for="item in list">
-            <div class="word">{{item.Content}}</div>
+            <div class="word">{{item.content}}</div>
             <div class="info">
                 <img class="avatar" src="static/images/100.gif">
                 <span>Hello&nbsp;在&nbsp;<i>2017/01/01 12:30</i>&nbsp;发起了新开篇&nbsp;<i>第一篇</i></span>
@@ -126,6 +130,15 @@ $(document).ready(function(){
     init_layout();
     data(0);
 });
+
+$(window).scroll(function(){
+    var s = $(window).scrollTop();
+    if(s>20){
+        $('#head-wrap').addClass('scroll');
+    }else{
+        $('#head-wrap').removeClass('scroll');
+    }
+})
 
 function init_layout(){
     var w = $(window).width();

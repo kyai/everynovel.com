@@ -12,7 +12,8 @@ type WordController struct {
 
 type Word struct {
     Id bson.ObjectId "_id"
-    Content string
+    Content     string `json:"content"`
+    Date        string `json:"date"`
 }
 
 const (
@@ -32,5 +33,6 @@ func (c *WordController) GetWord() {
     infs := []Word{}
     err = collection.Find(&bson.M{}).All(&infs)
 
-    c.EchoJSONP("111", "aaa", infs)
+    Id, _ := c.GetInt32("id")
+    c.EchoJSONP("111", string(Id), infs)
 }
