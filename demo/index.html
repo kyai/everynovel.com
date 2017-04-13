@@ -7,8 +7,8 @@
 <style type="text/css">
 html,body{margin: 0;padding: 0}
 #head-wrap,#foot-wrap,#main-wrap{width: 100%;height: auto;}
-#head-wrap{background: #666;position: fixed;}
-#foot-wrap{background: #666;}
+#head-wrap{background: #34352C;position: fixed;z-index: 9998}
+#foot-wrap{background: #34352C;}
 #main-wrap{padding-top: 60px}
 
 #head-wrap.scroll{border-bottom: 1px solid #ebebeb;box-shadow: 0 0 5px #888;}
@@ -75,6 +75,10 @@ html,body{margin: 0;padding: 0}
 </div>
 <div id="main-wrap">
     <div id="main-container">
+        <div id="main-operating">
+            <button class="layui-btn layui-btn-primary">创建新开篇</button>
+            <button class="layui-btn layui-btn-primary">继续上次阅读</button>
+        </div>
         <div class="item" v-for="item in list">
             <div class="word">{{item.content}}</div>
             <div class="info">
