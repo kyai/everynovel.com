@@ -1,6 +1,6 @@
 
 var EN = {
 	config : {
-		API_URL : 'http://47.90.49.118:8080'
+		API_URL : 'http://127.0.0.1:8080'
 	}
 }

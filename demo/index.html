@@ -76,8 +76,8 @@ html,body{margin: 0;padding: 0}
 <div id="main-wrap">
     <div id="main-container">
         <div id="main-operating">
-            <button class="layui-btn layui-btn-primary">创建新开篇</button>
-            <button class="layui-btn layui-btn-primary">继续上次阅读</button>
+            <button class="layui-btn layui-btn-primary" @click="create_new()">创建篇章</button>
+            <button class="layui-btn layui-btn-primary" @click="read_last()">继续上次阅读</button>
         </div>
         <div class="item" v-for="item in list">
             <div class="word">{{item.content}}</div>
@@ -127,6 +127,14 @@ var maindata = new Vue({
     el: '#main-container',
     data: {
         list : ''
+    },
+    methods: {
+        create_new : function(){
+            // 
+        },
+        read_last : function(){
+            // 
+        }
     }
 })
 
