@@ -27,7 +27,9 @@ html,body{margin: 0;padding: 0}
 
 #head-container .userinfo .bl .bl-btn{cursor: pointer;}
 #head-container .userinfo .bl .bl-btn:hover{color: #fff}
-#head-container .userinfo .bl .bl-tips{display: inline-block;background: #ccc;color: #34352C;padding: 0 5px;height: 20px;line-height: 20px;vertical-align: middle;}
+
+#head-container .userinfo .bl .bl-tips{display: inline-block;background: #ccc;color: #34352C;padding: 0 5px;margin: 0 10px 0 0;height: 20px;line-height: 20px;vertical-align: middle;}
+#head-container .userinfo .bl .bl-tips::after{width: 10px;height: 10px;position: absolute;top: 26px;background: #ccc;content: '';transform: rotate(-45deg);}
 
 /*foot*/
 #foot-container .copyright{line-height: 60px;color: #ccc}
@@ -53,6 +55,7 @@ html,body{margin: 0;padding: 0}
 
 /*layui*/
 .layui-nav{float: left;background: none}
+.layui-form{padding: 15px 15px 0 0}
 </style>
 </head>
 <body>
@@ -63,7 +66,7 @@ html,body{margin: 0;padding: 0}
         </a>
         <ul class="layui-nav" lay-filter="">
             <li class="layui-nav-item layui-this"><a href="javascript:;">首页</a></li>
-            <li class="layui-nav-item"><a href="javascript:;">导航菜单</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">发现</a></li>
             <li class="layui-nav-item"><a href="javascript:;">导航菜单</a></li>
         </ul>
         <div class="userinfo">
@@ -104,10 +107,22 @@ html,body{margin: 0;padding: 0}
 <!-- 弹窗 -->
 <div id="popups-create" class="popups">
     <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            </div>
+        </div>
         <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">请填写描述</label>
+            <label class="layui-form-label">内容</label>
             <div class="layui-input-block">
                 <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
     </form>
@@ -145,8 +160,10 @@ var HeadData = new Vue({
             layer.open({
                 type: 1,
                 title: false,
-                closeBtn: 0,
+                closeBtn: 1,
                 shadeClose: true,
+                resize: false,
+                area: '500px',
                 // skin: 'yourclass',
                 content: $('#popups-create')
             });
