@@ -25,8 +25,9 @@ html,body{margin: 0;padding: 0}
 #head-container .userinfo .al{}
 #head-container .userinfo .bl{}
 
-#head-container .userinfo .bl span{cursor: pointer;}
-#head-container .userinfo .bl span:hover{color: #fff}
+#head-container .userinfo .bl .bl-btn{cursor: pointer;}
+#head-container .userinfo .bl .bl-btn:hover{color: #fff}
+#head-container .userinfo .bl .bl-tips{display: inline-block;background: #ccc;color: #34352C;padding: 0 5px;height: 20px;line-height: 20px;vertical-align: middle;}
 
 /*foot*/
 #foot-container .copyright{line-height: 60px;color: #ccc}
@@ -47,6 +48,9 @@ html,body{margin: 0;padding: 0}
 .item .option{width: auto;height: auto;float: right;}
 .item .option span{width: auto;height: 24px;background: #ccc;color: #fff;display: inline-block;line-height: 24px;padding: 0 10px;border-radius: 12px;font-size: 12px;}
 
+/*other*/
+.popups{display: none;}
+
 /*layui*/
 .layui-nav{float: left;background: none}
 </style>
@@ -64,21 +68,20 @@ html,body{margin: 0;padding: 0}
         </ul>
         <div class="userinfo">
             <div class="al" v-if="isLogin">
-                <span>username</span>
+                <span class="al-name">{{username}}</span>
+                <span class="al-btn" @click="create_new()">创建新开篇</span>
+                <span class="al-btn" @click="read_last()">继续上次阅读</span>
             </div>
             <div class="bl" v-else>
-                <span @click="show_reg()">注册</span>
-                <span @click="show_log()">登陆</span>
+                <span class="bl-tips">登录后继续阅读</span>
+                <span class="bl-btn" @click="show_reg()">注册</span>
+                <span class="bl-btn" @click="show_log()">登陆</span>
             </div>
         </div>
     </div>
 </div>
 <div id="main-wrap">
     <div id="main-container">
-        <div id="main-operating">
-            <button class="layui-btn layui-btn-primary" @click="create_new()">创建篇章</button>
-            <button class="layui-btn layui-btn-primary" @click="read_last()">继续上次阅读</button>
-        </div>
         <div class="item" v-for="item in list">
             <div class="word">{{item.content}}</div>
             <div class="info">
@@ -98,6 +101,17 @@ html,body{margin: 0;padding: 0}
         <div class="copyright">&copy;&nbsp;Copyright&nbsp;-&nbsp;www.everynovel.com</div>
     </div>
 </div>
+<!-- 弹窗 -->
+<div id="popups-create" class="popups">
+    <form class="layui-form">
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">请填写描述</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 <script type="text/javascript" src="static/js/config.js"></script>
 <script type="text/javascript" src="static/js/jquery.min.js"></script>
@@ -108,33 +122,46 @@ html,body{margin: 0;padding: 0}
 layui.use('element', function(){
     var element = layui.element();
 });
+layui.use('layer', function(){
+    var layer = layui.layer;
+});
+layui.use('form', function(){
+    var form = layui.form();
+});
 
 /*vuejs*/
-var headdata = new Vue({
+var HeadData = new Vue({
     el: '#head-container',
     data: {
-        isLogin : 0
+        isLogin : 0,
+        username : 'Lisi'
     },
     methods: {
         show_log : function(){
-            headdata.isLogin = 1;
+            this.isLogin = 1;
         },
-        show_reg : function(){}
+        show_reg : function(){},
+        create_new : function(){
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                shadeClose: true,
+                // skin: 'yourclass',
+                content: $('#popups-create')
+            });
+        },
+        read_last : function(){},
     }
 })
 
-var maindata = new Vue({
+var MainData = new Vue({
     el: '#main-container',
     data: {
         list : ''
     },
     methods: {
-        create_new : function(){
-            // 
-        },
-        read_last : function(){
-            // 
-        }
+        // 
     }
 })
 
@@ -176,7 +203,7 @@ function data(id){
         },
         success: function (data) {
             console.log(data);
-            maindata.list = data.Data;
+            MainData.list = data.Data;
         },
         error: function(xhr,msg){
             alert('ERROR : '+msg);
