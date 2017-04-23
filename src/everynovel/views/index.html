@@ -33,11 +33,14 @@
 </div>
 <div id="main-wrap">
     <div id="main-container">
-        <div class="item" v-for="item in list" :data-id="item.id">
-            <div class="word" @click="word_click()">{{item.content}}</div>
+        <div v-if="item">
+            {{item.content}}
+        </div>
+        <div class="item" v-for="(v,k) in list" :data-i="k" :data-id="v.id">
+            <div class="word" @click="word_click()">{{v.content}}</div>
             <div class="info">
                 <img class="avatar" src="static/images/100.gif">
-                <span>Hello&nbsp;在&nbsp;<i>{{item.date}}</i>&nbsp;发起了新开篇&nbsp;<i>{{item.title}}</i></span>
+                <span>Hello&nbsp;在&nbsp;<i>{{v.date}}</i>&nbsp;发起了新开篇&nbsp;<i>{{v.title}}</i></span>
                 <div class="option">
                     <span>续创99次</span>
                     <span>点赞99次</span>
@@ -123,12 +126,15 @@ var HeadData = new Vue({
 var MainData = new Vue({
     el: '#main-container',
     data: {
-        list : ''
+        list : [],
+        item : {},
     },
     methods: {
         word_click: function(){
-            var t = event.currentTarget
-            $(t).parent('.item').siblings().fadeOut();
+            var t = event.currentTarget;
+            var p = $(t).parent('.item');
+            // $(t).parent('.item').siblings().fadeOut();
+            this.item = this.list[$(p).data('i')];
         }
     }
 })
