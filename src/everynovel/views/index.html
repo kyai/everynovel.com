@@ -85,11 +85,11 @@ html,body{margin: 0;padding: 0}
 </div>
 <div id="main-wrap">
     <div id="main-container">
-        <div class="item" v-for="item in list">
-            <div class="word">{{item.content}}</div>
+        <div class="item" v-for="item in list" :data-id="item.id">
+            <div class="word" @click="word_click()">{{item.content}}</div>
             <div class="info">
                 <img class="avatar" src="static/images/100.gif">
-                <span>Hello&nbsp;在&nbsp;<i>2017/01/01 12:30</i>&nbsp;发起了新开篇&nbsp;<i>第一篇</i></span>
+                <span>Hello&nbsp;在&nbsp;<i>{{item.date}}</i>&nbsp;发起了新开篇&nbsp;<i>{{item.title}}</i></span>
                 <div class="option">
                     <span>续创99次</span>
                     <span>点赞99次</span>
@@ -106,7 +106,7 @@ html,body{margin: 0;padding: 0}
 </div>
 <!-- 弹窗 -->
 <div id="popups-create" class="popups">
-    <form class="layui-form">
+    <form class="layui-form" onsubmit="return false">
         <div class="layui-form-item">
             <label class="layui-form-label">标题</label>
             <div class="layui-input-block">
@@ -121,7 +121,7 @@ html,body{margin: 0;padding: 0}
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="create_word()">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
@@ -178,7 +178,10 @@ var MainData = new Vue({
         list : ''
     },
     methods: {
-        // 
+        word_click: function(){
+            var t = event.currentTarget
+            $(t).parent('.item').siblings().fadeOut();
+        }
     }
 })
 
@@ -209,18 +212,38 @@ function init_layout(){
 function data(id){
     $.ajax({
         type: "GET",
-        url: EN.config.API_URL+"/GetWord",
+        url: "/GetWord",
         data: {id:id},
         timeout : 6000,
-        dataType: "jsonp",
-        jsonp: "callbackparam",
-        jsonpCallback:"jsonpCallback",
+        dataType: "JSON",
         beforeSend: function(xhr){
             // do something
         },
         success: function (data) {
             console.log(data);
             MainData.list = data.Data;
+        },
+        error: function(xhr,msg){
+            alert('ERROR : '+msg);
+        },
+        complete: function(){
+            // do something
+        }
+    });
+}
+
+function create_word(id){
+    $.ajax({
+        type: "POST",
+        url: "/PostWord",
+        data: $('#popups-create form').serialize(),
+        timeout : 6000,
+        dataType: "JSON",
+        beforeSend: function(xhr){
+            // do something
+        },
+        success: function (data) {
+            console.log(data);
         },
         error: function(xhr,msg){
             alert('ERROR : '+msg);
