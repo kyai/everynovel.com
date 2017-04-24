@@ -28,6 +28,9 @@ html,body{margin: 0;padding: 0}
 #foot-container .copyright{line-height: 60px;color: #ccc}
 
 /*main*/
+#main-container .curr{}
+#main-container .curr .title{width: auto;height: 40px;background: #F44336;line-height: 40px;text-align: center;}
+
 #main-container .item{width: auto;height: auto;padding: 0 10px;margin: 10px 0;background: #eee;border-radius: 4px}
 #main-container .item:hover{background: #ddd;
     transition: background .3s;-moz-transition: background .3s;-webkit-transition: background .3s;-o-transition: background .3s;

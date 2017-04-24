@@ -33,8 +33,11 @@
 </div>
 <div id="main-wrap">
     <div id="main-container">
-        <div v-if="item">
-            {{item.content}}
+        <div v-if="last.length">
+            <p v-for="(v,k) in last">{{v.content}}</p>
+        </div>
+        <div v-if="item" class="curr">
+            <div class="title"><i class="layui-icon">&#xe603;</i>{{item.content}}</div>
         </div>
         <div class="item" v-for="(v,k) in list" :data-i="k" :data-id="v.id">
             <div class="word" @click="word_click()">{{v.content}}</div>
@@ -127,7 +130,10 @@ var MainData = new Vue({
     el: '#main-container',
     data: {
         list : [],
-        item : {},
+        last : [],
+        item : '',
+        title : '',
+        model : 0,
     },
     methods: {
         word_click: function(){
@@ -135,6 +141,7 @@ var MainData = new Vue({
             var p = $(t).parent('.item');
             // $(t).parent('.item').siblings().fadeOut();
             this.item = this.list[$(p).data('i')];
+            this.last.push(this.item);
         }
     }
 })
