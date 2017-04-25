@@ -13,7 +13,7 @@
             <img src="static/images/logo.fw.png">
         </a>
         <ul class="layui-nav" lay-filter="">
-            <li class="layui-nav-item layui-this"><a href="javascript:;">首页</a></li>
+            <li class="layui-nav-item layui-this"><a href="/">首页</a></li>
             <li class="layui-nav-item"><a href="javascript:;">发现</a></li>
             <li class="layui-nav-item"><a href="javascript:;">导航菜单</a></li>
         </ul>
@@ -32,7 +32,7 @@
     </div>
 </div>
 <div id="main-wrap">
-    <div id="main-container">
+    <div id="main-container" v-cloak>
         <div v-if="last.length" class="read">
             <div class="title"><i class="layui-icon">&#xe603;</i>{{last[0].title}}</div>
             <p v-for="(v,k) in last">{{v.content}}</p>
@@ -88,141 +88,5 @@
 <script type="text/javascript" src="static/js/jquery.min.js"></script>
 <script type="text/javascript" src="static/plugins/layui/layui.js"></script>
 <script type="text/javascript" src="static/js/vue.js"></script>
-<script type="text/javascript">
-/*layui*/
-layui.use('element', function(){
-    var element = layui.element();
-});
-layui.use('layer', function(){
-    var layer = layui.layer;
-});
-layui.use('form', function(){
-    var form = layui.form();
-});
-
-/*vuejs*/
-var HeadData = new Vue({
-    el: '#head-container',
-    data: {
-        isLogin : 0,
-        username : 'Lisi'
-    },
-    methods: {
-        show_log : function(){
-            this.isLogin = 1;
-        },
-        show_reg : function(){},
-        create_new : function(){
-            layer.open({
-                type: 1,
-                title: false,
-                closeBtn: 1,
-                shadeClose: true,
-                resize: false,
-                area: '500px',
-                // skin: 'yourclass',
-                content: $('#popups-create')
-            });
-        },
-        read_last : function(){},
-    }
-})
-
-var MainData = new Vue({
-    el: '#main-container',
-    data: {
-        list : [],
-        last : [],
-        item : '',
-        // title : '',
-        // model : 0,
-    },
-    methods: {
-        word_click: function(){
-            var t = event.currentTarget;
-            var p = $(t).parent('.item');
-
-            var ii = $(p).data('i');
-            var id = $(p).data('id')
-
-            // $(t).parent('.item').siblings().fadeOut();
-            this.item = this.list[ii];
-            this.last.push(this.item);
-
-            $('#popups-create form input[name="pid"]').val(id);
-            data(id);
-        }
-    }
-})
-
-$(document).ready(function(){
-    init_layout();
-    data();
-});
-
-$(window).scroll(function(){
-    var s = $(window).scrollTop();
-    if(s>20){
-        $('#head-wrap').addClass('scroll');
-    }else{
-        $('#head-wrap').removeClass('scroll');
-    }
-})
-
-function init_layout(){
-    var w = $(window).width();
-    var h = $(window).height();
-
-    var h_h = $('#head-container').height();
-    var h_f = $('#foot-container').height();
-
-    $('#main-container').css('min-height',h-h_h-h_f-20);
-}
-
-function data(id){
-    console.log(id);
-    $.ajax({
-        type: "GET",
-        url: "/GetWord",
-        data: {id:id},
-        timeout : 6000,
-        dataType: "JSON",
-        beforeSend: function(xhr){
-            // do something
-        },
-        success: function (data) {
-            console.log(data);
-            MainData.list = data.Data;
-        },
-        error: function(xhr,msg){
-            alert('ERROR : '+msg);
-        },
-        complete: function(){
-            // do something
-        }
-    });
-}
-
-function create_word(id){
-    $.ajax({
-        type: "POST",
-        url: "/PostWord",
-        data: $('#popups-create form').serialize(),
-        timeout : 6000,
-        dataType: "JSON",
-        beforeSend: function(xhr){
-            // do something
-        },
-        success: function (data) {
-            console.log(data);
-        },
-        error: function(xhr,msg){
-            alert('ERROR : '+msg);
-        },
-        complete: function(){
-            // do something
-        }
-    });
-}
-</script>
+<script type="text/javascript" src="static/js/index.js"></script>
 </html>

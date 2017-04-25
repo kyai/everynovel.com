@@ -29,7 +29,8 @@ html,body{margin: 0;padding: 0}
 
 /*main*/
 #main-container .read .title{width: auto;height: 40px;background: #F44336;line-height: 40px;text-align: center;color: #fff;font-size: 24px;letter-spacing: 2px}
-#main-container .read .title i{width: auto;height: 40px;display: inline-block;float: left;}
+#main-container .read .title i{width: 40px;height: 40px;display: inline-block;float: left;text-align: center;line-height: 40px;vertical-align: middle;}
+#main-container .read .title i:hover{background: rgba(0,0,0,.2);cursor: pointer;}
 
 #main-container .curr{}
 
