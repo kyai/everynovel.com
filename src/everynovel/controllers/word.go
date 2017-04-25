@@ -13,6 +13,8 @@ type WordController struct {
 
 type Word struct {
     Id_ 		bson.ObjectId `bson:"_id" json:"id"`
+    Tid			string `json:"tid"`
+    Pid         string `json:"pid"`
     Title 		string `json:"title"`
     Content     string `json:"content"`
     Date        string `json:"date"`
@@ -31,10 +33,13 @@ func (c *WordController) GetWord() {
     defer session.Close()
     session.SetMode(mgo.Monotonic, true)
 
+    // id, _ := c.GetInt32("id")
+    pid := c.GetString("id")
+
     collection := session.DB("everynovel").C("en_word")
 
     infs := []Word{}
-    err = collection.Find(&bson.M{}).Sort("-date").All(&infs)
+    err = collection.Find(&bson.M{"pid":pid}).Sort("-date").All(&infs)
 
     Id, _ := c.GetInt32("id")
     c.EchoJSON("111", string(Id), infs)
@@ -50,15 +55,18 @@ func (c *WordController) PostWord() {
 
     collection := session.DB("everynovel").C("en_word")
 
+    pid := c.GetString("pid")
     title := c.GetString("title")
     content := c.GetString("content")
 
     fmt.Println("===")
+    fmt.Println(pid)
     fmt.Println(title)
-    fmt.Println(content)
+    // fmt.Println(content)
 
 	word := &Word{
 		Id_: bson.NewObjectId(),
+        Pid: pid,
 		Title: title,
 		Content: content,
 		Date: time.Now().Format("2006-01-02 15:04:05"),

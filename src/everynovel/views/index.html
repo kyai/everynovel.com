@@ -62,6 +62,7 @@
 <!-- 弹窗 -->
 <div id="popups-create" class="popups">
     <form class="layui-form" onsubmit="return false">
+        <input type="hidden" name="pid" value="">
         <div class="layui-form-item">
             <label class="layui-form-label">标题</label>
             <div class="layui-input-block">
@@ -140,16 +141,23 @@ var MainData = new Vue({
         word_click: function(){
             var t = event.currentTarget;
             var p = $(t).parent('.item');
+
+            var ii = $(p).data('i');
+            var id = $(p).data('id')
+
             // $(t).parent('.item').siblings().fadeOut();
-            this.item = this.list[$(p).data('i')];
+            this.item = this.list[ii];
             this.last.push(this.item);
+
+            $('#popups-create form input[name="pid"]').val(id);
+            data(id);
         }
     }
 })
 
 $(document).ready(function(){
     init_layout();
-    data(0);
+    data();
 });
 
 $(window).scroll(function(){
@@ -172,6 +180,7 @@ function init_layout(){
 }
 
 function data(id){
+    console.log(id);
     $.ajax({
         type: "GET",
         url: "/GetWord",
