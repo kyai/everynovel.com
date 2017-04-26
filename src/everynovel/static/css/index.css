@@ -51,7 +51,11 @@ html,body{margin: 0;padding: 0}
 
 /*other*/
 .popups{display: none;}
+#popups-regist ul.layui-tab-title li{width: 50%;margin: 0;padding: 0}
 
 /*layui*/
 .layui-nav{float: left;background: none}
 .layui-form{padding: 15px 15px 0 0}
+.layui-tab{margin: 0}
+.layui-tab-card{border-radius: 0}
+.layui-tab-content{height: auto !important;}

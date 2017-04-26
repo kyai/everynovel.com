@@ -1,7 +1,7 @@
 
 /*layui*/
 layui.use('element', function(){
-    var element = layui.element();
+    element = layui.element();
 });
 layui.use('layer', function(){
     var layer = layui.layer;
@@ -19,9 +19,32 @@ var HeadData = new Vue({
     },
     methods: {
         show_log : function(){
-            this.isLogin = 1;
+            // this.isLogin = 1;
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 1,
+                shadeClose: true,
+                resize: false,
+                area: '500px',
+                offset: '100px',
+                content: $('#popups-regist')
+            });
+            element.tabChange('reglog', 'log');
         },
-        show_reg : function(){},
+        show_reg : function(){
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 1,
+                shadeClose: true,
+                resize: false,
+                area: '500px',
+                offset: '100px',
+                content: $('#popups-regist')
+            });
+            element.tabChange('reglog', 'reg');
+        },
         create_new : function(){
             layer.open({
                 type: 1,
@@ -141,3 +164,33 @@ function create_word(id){
         }
     });
 }
+
+
+
+function login(){
+    $.ajax({
+        type: "GET",
+        url: "/GetUser",
+        data: $('#popups-regist form').serialize(),
+        timeout : 6000,
+        dataType: "JSON",
+        beforeSend: function(xhr){
+            // do something
+        },
+        success: function (data) {
+            console.log(data);
+            if(!data || data.Code == 1002) return;
+            HeadData.isLogin = 1;
+            HeadData.username = data.Data.username;
+            layer.close(layer.index);
+        },
+        error: function(xhr,msg){
+            alert('ERROR : '+msg);
+        },
+        complete: function(){
+            // do something
+        }
+    });
+}
+
+function regist(){}
