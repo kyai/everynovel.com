@@ -91,6 +91,12 @@ function init_layout(){
 
 function data(id){
     console.log(id);
+
+    if(!id){
+        MainData.last = [];
+        MainData.item = '';
+    }
+    
     $.ajax({
         type: "GET",
         url: "/GetWord",
