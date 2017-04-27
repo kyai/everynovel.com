@@ -9,5 +9,11 @@ type IndexController struct {
 }
 
 func (c *IndexController) Get() {
+	uid := c.GetSession("uid")
+	if uid != nil{
+		c.Data["uid"] = c.GetSession("uid")
+		c.Data["uname"] = c.GetSession("uname")
+	}
+
 	c.TplName = "index.html"
 }

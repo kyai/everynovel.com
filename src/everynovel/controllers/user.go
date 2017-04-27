@@ -43,6 +43,10 @@ func (c *UserController) GetUser() {
         rdata["id"] = infs.Id_
         rdata["username"] = infs.Username
 
+        // session
+        c.SetSession("uid", infs.Id_)
+        c.SetSession("uname", infs.Username)
+
         c.EchoJSON("1001", "222", rdata)
     }else{
         c.EchoJSON("1002", "验证失败", "")
