@@ -8,8 +8,9 @@ password
 en_wordÎÄÕÂ±í
 --------------------------
 id
-top
-pid
+top		top id
+pid		parent id
+uid		user id
 title
 content
 date
