@@ -1,14 +1,20 @@
 
 /*layui*/
-layui.use('element', function(){
+// layui.use('element', function(){
+//     element = layui.element();
+// });
+// layui.use('layer', function(){
+//     var layer = layui.layer;
+// });
+// layui.use('form', function(){
+//     var form = layui.form();
+// });
+
+;!function(){
+    layer = layui.layer;
+    from = layui.form();
     element = layui.element();
-});
-layui.use('layer', function(){
-    var layer = layui.layer;
-});
-layui.use('form', function(){
-    var form = layui.form();
-});
+}();
 
 /*vuejs*/
 var HeadData = new Vue({
