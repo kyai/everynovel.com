@@ -72,7 +72,7 @@ var MainData = new Vue({
     data: {
         list : [],
         last : [],
-        item : '',
+        curr : '',
         // title : '',
         // model : 0,
     },
@@ -85,8 +85,8 @@ var MainData = new Vue({
             var id = $(p).data('id')
 
             // $(t).parent('.item').siblings().fadeOut();
-            this.item = this.list[ii];
-            this.last.push(this.item);
+            this.curr = this.list[ii];
+            this.last.push(this.curr);
 
             $('#popups-create form input[name="pid"]').val(id);
             data(id);
@@ -123,7 +123,7 @@ function data(id){
 
     if(!id){
         MainData.last = [];
-        MainData.item = '';
+        MainData.curr = '';
     }
     
     $.ajax({
@@ -134,10 +134,13 @@ function data(id){
         dataType: "JSON",
         beforeSend: function(xhr){
             // do something
+            layer.open({type:3});
         },
         success: function (data) {
             console.log(data);
             MainData.list = data.Data;
+
+            layer.closeAll();
         },
         error: function(xhr,msg){
             alert('ERROR : '+msg);

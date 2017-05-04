@@ -35,13 +35,13 @@
     <div id="main-container" v-cloak>
         <div v-if="last.length" class="read">
             <div class="title"><i class="layui-icon">&#xe603;</i>{{last[0].title}}</div>
-            <p v-for="(v,k) in last">{{v.content}}</p>
+            <p v-for="(v,k) in last">{{v.id}} | {{v.content}}</p>
         </div>
-        <div v-if="item" class="curr">
-            
+        <div v-if="curr" class="curr">
+            <span style="color: red">{{curr.content}}</span>
         </div>
         <div class="item" v-for="(v,k) in list" :data-i="k" :data-id="v.id">
-            <div class="word" @click="word_click()">{{v.content}}</div>
+            <div class="word" @click="word_click()">{{v.content}}<br>{{v.id}} | {{v.pid}}</div>
             <div class="info">
                 <img class="avatar" src="static/images/100.gif">
                 <span>Hello&nbsp;在&nbsp;<i>{{v.date}}</i>&nbsp;发起了新开篇&nbsp;<i>{{v.title}}</i></span>
