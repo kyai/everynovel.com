@@ -14,5 +14,3 @@ uid		user id
 title
 content
 date
-
-1
