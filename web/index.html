@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Every Novel</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="static/plugins/layui/css/layui.css">
+<style type="text/css">
+html,body{margin: 0;padding: 0}
+#head-wrap,#foot-wrap,#main-wrap{width: 100%;height: auto;}
+#head-wrap{background: #34352C;position: fixed;z-index: 9998}
+#foot-wrap{background: #34352C;}
+#main-wrap{padding-top: 60px}
+
+#head-wrap.scroll{border-bottom: 1px solid #ebebeb;box-shadow: 0 0 5px #888;}
+
+#head-container,#foot-container,#main-container{width: 1200px;margin: 0 auto;}
+#head-container{height: 60px;}
+#foot-container{height: 60px;}
+#main-container{height: auto;padding: 10px 0;}
+
+/*head*/
+#head-container a.logo{width: auto;height: auto;display: block;float: left;}
+#head-container a.logo img{width: auto;height: 60px;}
+#head-container .userinfo{width: auto;height: 30px;float: right;margin: 15px 0;line-height: 30px;text-align: right;color: #ccc;}
+#head-container .userinfo .al{}
+#head-container .userinfo .bl{}
+
+#head-container .userinfo .bl .bl-btn{cursor: pointer;}
+#head-container .userinfo .bl .bl-btn:hover{color: #fff}
+
+#head-container .userinfo .bl .bl-tips{display: inline-block;background: #ccc;color: #34352C;padding: 0 5px;margin: 0 10px 0 0;height: 20px;line-height: 20px;vertical-align: middle;}
+#head-container .userinfo .bl .bl-tips::after{width: 10px;height: 10px;position: absolute;top: 26px;background: #ccc;content: '';transform: rotate(-45deg);}
+
+/*foot*/
+#foot-container .copyright{line-height: 60px;color: #ccc}
+
+/*main*/
+#main-container .item{width: auto;height: auto;padding: 0 10px;margin: 10px 0;background: #eee;border-radius: 4px}
+#main-container .item:hover{background: #ddd;
+    transition: background .3s;-moz-transition: background .3s;-webkit-transition: background .3s;-o-transition: background .3s;
+}
+
+.item .word{width: auto;height: auto;padding: 20px 0;line-height: 30px;}
+.item .info{width: auto;height: auto;padding: 10px 0;line-height: 30px;
+    border-top: dashed 1px #ccc;}
+
+.item .word:hover{cursor: pointer;color: #666}
+
+.item .avatar{width: 30px;height: 30px;border-radius: 50%;}
+.item .option{width: auto;height: auto;float: right;}
+.item .option span{width: auto;height: 24px;background: #ccc;color: #fff;display: inline-block;line-height: 24px;padding: 0 10px;border-radius: 12px;font-size: 12px;}
+
+/*other*/
+.popups{display: none;}
+
+/*layui*/
+.layui-nav{float: left;background: none}
+.layui-form{padding: 15px 15px 0 0}
+</style>
+</head>
+<body>
+<div id="head-wrap">
+    <div id="head-container">
+        <a href="" class="logo">
+            <img src="static/images/logo.fw.png">
+        </a>
+        <ul class="layui-nav" lay-filter="">
+            <li class="layui-nav-item layui-this"><a href="javascript:;">首页</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">发现</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">导航菜单</a></li>
+        </ul>
+        <div class="userinfo">
+            <div class="al" v-if="isLogin">
+                <span class="al-name">{{username}}</span>
+                <span class="al-btn" @click="create_new()">创建新开篇</span>
+                <span class="al-btn" @click="read_last()">继续上次阅读</span>
+            </div>
+            <div class="bl" v-else>
+                <span class="bl-tips">登录后继续阅读</span>
+                <span class="bl-btn" @click="show_reg()">注册</span>
+                <span class="bl-btn" @click="show_log()">登陆</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="main-wrap">
+    <div id="main-container">
+        <div class="item" v-for="item in list">
+            <div class="word">{{item.content}}</div>
+            <div class="info">
+                <img class="avatar" src="static/images/100.gif">
+                <span>Hello&nbsp;在&nbsp;<i>2017/01/01 12:30</i>&nbsp;发起了新开篇&nbsp;<i>第一篇</i></span>
+                <div class="option">
+                    <span>续创99次</span>
+                    <span>点赞99次</span>
+                    <span>阅读99次</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="foot-wrap">
+    <div id="foot-container">
+        <div class="copyright">&copy;&nbsp;Copyright&nbsp;-&nbsp;www.everynovel.com</div>
+    </div>
+</div>
+<!-- 弹窗 -->
+<div id="popups-create" class="popups">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">内容</label>
+            <div class="layui-input-block">
+                <textarea name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<script type="text/javascript" src="static/js/config.js"></script>
+<script type="text/javascript" src="static/js/jquery.min.js"></script>
+<script type="text/javascript" src="static/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="static/js/vue.js"></script>
+<script type="text/javascript">
+/*layui*/
+layui.use('element', function(){
+    var element = layui.element();
+});
+layui.use('layer', function(){
+    var layer = layui.layer;
+});
+layui.use('form', function(){
+    var form = layui.form();
+});
+
+/*vuejs*/
+var HeadData = new Vue({
+    el: '#head-container',
+    data: {
+        isLogin : 0,
+        username : 'Lisi'
+    },
+    methods: {
+        show_log : function(){
+            this.isLogin = 1;
+        },
+        show_reg : function(){},
+        create_new : function(){
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 1,
+                shadeClose: true,
+                resize: false,
+                area: '500px',
+                // skin: 'yourclass',
+                content: $('#popups-create')
+            });
+        },
+        read_last : function(){},
+    }
+})
+
+var MainData = new Vue({
+    el: '#main-container',
+    data: {
+        list : ''
+    },
+    methods: {
+        // 
+    }
+})
+
+$(document).ready(function(){
+    init_layout();
+    data(0);
+});
+
+$(window).scroll(function(){
+    var s = $(window).scrollTop();
+    if(s>20){
+        $('#head-wrap').addClass('scroll');
+    }else{
+        $('#head-wrap').removeClass('scroll');
+    }
+})
+
+function init_layout(){
+    var w = $(window).width();
+    var h = $(window).height();
+
+    var h_h = $('#head-container').height();
+    var h_f = $('#foot-container').height();
+
+    $('#main-container').css('min-height',h-h_h-h_f-20);
+}
+
+function data(id){
+    $.ajax({
+        type: "GET",
+        url: EN.config.API_URL+"/GetWord",
+        data: {id:id},
+        timeout : 6000,
+        dataType: "jsonp",
+        jsonp: "callbackparam",
+        jsonpCallback:"jsonpCallback",
+        beforeSend: function(xhr){
+            // do something
+        },
+        success: function (data) {
+            console.log(data);
+            MainData.list = data.Data;
+        },
+        error: function(xhr,msg){
+            alert('ERROR : '+msg);
+        },
+        complete: function(){
+            // do something
+        }
+    });
+}
+</script>
+</html>
